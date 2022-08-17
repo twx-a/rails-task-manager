@@ -7,11 +7,19 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-  def add
-    @tasks = Task.new
+  def new
+    @task = Task.new
   end
 
   def create
-    @tasks = Task.new
+    @task = Task.new(form_params)
+    @task.save!
+    redirect_to task_path(@task)
+  end
+
+  private
+
+  def form_params
+    params.require(:task).permit(:title, :details, :completed)
   end
 end
